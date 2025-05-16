@@ -70,7 +70,6 @@ DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 CLOUDINARY_STORAGE = {
     "CLOUD_NAME": "dp6jechuq",
     "API_KEY": "942447165995487",
-    "API_SECRET": "uGL-HQ4cK2obQRLEVAW58aY7_Ps",
     "SECURE": True,
 }
 # Middleware
@@ -118,7 +117,6 @@ WSGI_APPLICATION = "config.wsgi.application"
 # База данных
 DATABASES = {
     "default": dj_database_url.config(
-        default="postgresql://postgres:HdcRXWBNnBhKlKKvVjOtyzROpuJWAgcQ@switchback.proxy.rlwy.net:15085/railway"
     )
 }
 # Авторская модель пользователя
