@@ -7,7 +7,7 @@ def get_cart_items(request):
         try:
             product = Product.objects.get(pk=product_id)
         except Product.DoesNotExist:
-            continue  # безопасно пропускаем удалённые товары
+            continue  
 
         items.append({
             'product': product,
