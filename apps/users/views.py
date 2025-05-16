@@ -91,7 +91,7 @@ def logout_view(request):
     return redirect('login')
 
 
-@csrf_exempt  # Временно для отладки, в продакшене лучше использовать CSRF-токен
+@csrf_exempt  
 @login_required
 def toggle_favorite(request, product_id):
     if request.method == 'POST':
