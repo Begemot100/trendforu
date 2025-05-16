@@ -24,7 +24,5 @@ urlpatterns = [
 
 
 
-# Обслуживание медиафайлов в режиме DEBUG
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-# URL configuration here
