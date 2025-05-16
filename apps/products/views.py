@@ -35,7 +35,7 @@ def shop_view(request):
     return render(request, 'products/shop.html', context)
 
 
-@csrf_exempt  # Временно для отладки, в продакшене лучше использовать CSRF-токен
+@csrf_exempt  
 @login_required
 def toggle_favorite(request, product_id):
     if request.method == 'POST':
