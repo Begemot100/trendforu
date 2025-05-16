@@ -8,8 +8,7 @@ class UserAdmin(BaseUserAdmin):
     list_display = ['email', 'username', 'is_staff', 'is_active']
     search_fields = ['email', 'username']
     ordering = ['email']
-    # ❗ НЕ добавляй повторно email в fieldsets → уже унаследован
-
+    
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ['user', 'address', 'phone']
