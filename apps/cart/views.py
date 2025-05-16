@@ -94,7 +94,7 @@ def add_to_cart(request, product_id):
 
         product = get_object_or_404(Product, pk=product_id)
 
-        # Validate stock if size is provided
+        
         if size:
             try:
                 product_size = ProductSize.objects.get(product=product, size=size)
@@ -246,7 +246,7 @@ def cart_delete(request, item_id):
     return redirect('profile')
 
 
-# AJAX версии (без перезагрузки)
+
 @require_POST
 @login_required
 def cart_increase(request, item_id):
