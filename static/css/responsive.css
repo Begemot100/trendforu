@@ -1,0 +1,150 @@
+/* ===== Мобильная адаптация и максимальное укрупнение ===== */
+@media (max-width: 1024px) {
+  body {
+    font-size: 24px !important;
+    line-height: 1.6 !important;
+    font-family: '#44 Font', sans-serif;
+
+  }
+
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 32px 24px !important;
+  }
+
+  nav a {
+    display: block;
+    margin: 20px 0 !important;
+    font-size: 22px !important;
+    font-weight: 800 !important;
+  }
+
+  .shop-title {
+    font-size: 64px !important;
+    font-weight: 400 !important;
+    text-align: center;
+    margin-bottom: 64px !important;
+    letter-spacing: 6px;
+  }
+
+  .shop-container {
+    padding: 100px 24px !important;
+  }
+
+  .product-grid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 80px !important;
+    padding: 0 24px !important;
+  }
+
+  .product-card {
+    width: 100%;
+    padding: 48px !important;
+  }
+
+  .product-card img {
+    width: 100%;
+    height: auto !important;
+    max-height: none !important;
+  }
+
+  .product-title {
+    font-size: 50px !important;
+    font-weight: 500 !important;
+    text-transform: uppercase;
+
+    color: #037a46;
+    margin-top: 32px !important;
+  }
+
+  .product-price {
+    font-size: 32px !important;
+    font-weight: 400 !important;
+    color: #f1f1f1 !important;
+    margin-top: 16px !important;
+  }
+
+  .product-sizes,
+  .product-sold-out {
+    font-size: 30px !important;
+    font-weight: 400 !important;
+    letter-spacing: 1.5px !important;
+    margin-top: 12px !important;
+  }
+
+  .fixed-header .corner {
+    font-size: 56px;
+    font-weight: 400 !important;
+    padding: 28px 32px !important;
+  }
+
+  .fixed-header .corner a {
+    font-size: 36px;
+    font-weight: 400 !important;
+  }
+}
+
+/* ===== Закреплённое меню по углам (десктоп / дефолт) ===== */
+.fixed-header {
+  position: fixed;
+      font-size: 56px;
+
+  inset: 0;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.fixed-header .corner {
+  position: absolute;
+  pointer-events: auto;
+  padding: 12px 16px;
+  font-size: 22px;
+  font-weight: 400;
+  color: white;
+}
+
+.fixed-header .corner a {
+  color: white;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.fixed-header .corner a:hover {
+  opacity: 0.8;
+}
+
+.corner.top-left {
+  top: 16px;
+  left: 20px;
+  font-size: 25px;
+    color: white;
+
+}
+
+.corner.top-right {
+  top: 16px;
+  right: 20px;
+  font-size: 22px;
+  text-transform: uppercase;
+    color: white;
+
+
+}
+
+.corner.bottom-left {
+  bottom: 16px;
+  left: 20px;
+  font-size: 22px;
+  color: white;
+
+}
+
+.corner.bottom-right {
+  bottom: 16px;
+  right: 20px;
+    font-size: 22px;
+      color: white;
+
+}

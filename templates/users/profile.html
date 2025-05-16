@@ -1,0 +1,537 @@
+{% load static template_filters %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum DIY: maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="Личный кабинет TRENDFORU">
+  <meta name="keywords" content="профиль, TRENDFORU, мода">
+  <meta name="csrf-token" content="{{ csrf_token }}">
+  <title>Профиль — TRENDFORU</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;500;700&display=swap">
+  <link rel="preload" href="{% static 'images/placeholder.jpg' %}" as="image">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+      background: linear-gradient(180deg, #0A0A0A 0%, #181818 100%);
+      color: #E8ECEF;
+      min-height: 100vh;
+      padding: 50px 15px;
+      line-height: 1.6;
+      display: flex;
+      justify-content: center;
+      font-weight: 400;
+      overflow-x: hidden;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+
+    .profile-container {
+      width: 100%;
+      max-width: 700px;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    h2, h3 {
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: #FFFFFF;
+      text-transform: uppercase;
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+    }
+
+    p {
+      color: #A1A1A6;
+      font-size: 0.9rem;
+      font-weight: 400;
+      margin: 6px 0;
+    }
+
+    .section {
+      margin-top: 30px;
+    }
+
+    .logout-link {
+      display: inline-block;
+      background: rgba(26, 26, 26, 0.3);
+      backdrop-filter: blur(6px);
+      color: #00D4FF;
+      padding: 8px 16px;
+      text-decoration: none;
+      font-weight: 400;
+      font-size: 0.85rem;
+      border: 1px solid rgba(0, 212, 255, 0.3);
+      border-radius: 10px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      min-width: 48px;
+      text-align: center;
+    }
+
+    .logout-link:hover {
+      background: #00D4FF;
+      color: #181818;
+      transform: scale(1.05);
+    }
+
+    .item-box {
+      background: rgba(36, 36, 36, 0.9);
+      backdrop-filter: blur(10px);
+      padding: 16px;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .item-box:hover {
+      transform: translateY(-4px);
+    }
+
+    .item-box strong {
+      font-size: 0.95rem;
+      color: #FFFFFF;
+      font-weight: 400;
+    }
+
+    .item-box span {
+      font-size: 0.85rem;
+      color: #A1A1A6;
+    }
+
+    form input, form select {
+      width: 100%;
+      padding: 10px;
+      margin: 6px 0;
+      border: none;
+      background: rgba(48, 48, 48, 0.7);
+      color: #E8ECEF;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 400;
+      transition: background 0.3s ease;
+    }
+
+    form input:focus, form select:focus {
+      background: rgba(64, 64, 64, 0.7);
+      outline: none;
+    }
+
+    form button {
+      background: #00D4FF;
+      color: #181818;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 400;
+      font-size: 0.85rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      min-width: 48px;
+    }
+
+    form button:hover {
+      background: #4DE1FF;
+      transform: scale(1.05);
+    }
+
+    .avatar-container {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: #333;
+      object-fit: cover;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+      border: 1px solid rgba(232, 236, 239, 0.2);
+    }
+
+    .avatar:hover {
+      transform: scale(1.08);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .avatar-upload-btn {
+      background: rgba(26, 26, 26, 0.3);
+      backdrop-filter: blur(6px);
+      color: #E8ECEF;
+      padding: 8px 16px;
+      border: 1px solid rgba(232, 236, 239, 0.3);
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 400;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .avatar-upload-btn:hover {
+      background: #E8ECEF;
+      color: #000000;
+      transform: scale(1.05);
+    }
+
+    .favorite-img {
+      width: 100%;
+      max-height: 160px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .favorite-img:hover {
+      transform: scale(1.03);
+    }
+
+    .cart-update-form button, .item-box form button {
+      background: #FF3B30;
+      color: #FFFFFF;
+    }
+
+    .cart-update-form button:hover, .item-box form button:hover {
+      background: #FF6B66;
+      transform: scale(1.05);
+    }
+
+    a:not(.logout-link) {
+      color: #00D4FF;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 400;
+      transition: color 0.3s ease;
+      min-width: 48px;
+      display: inline-block;
+      text-align: center;
+    }
+
+    a:not(.logout-link):hover {
+      color: #4DE1FF;
+    }
+
+    .total-button {
+      background: #00D4FF;
+      color: #181818;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 400;
+      font-size: 0.85rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      text-align: center;
+      display: inline-block;
+      width: 100%;
+   輕
+
+    .total-button:hover {
+      background: #4DE1FF;
+      transform: scale(1.05);
+    }
+
+    label {
+      font-size: 0.9rem;
+      color: #A1A1A6;
+      font-weight: 400;
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .profile-container {
+        padding: 20px 10px;
+      }
+
+      h2, h3 {
+        font-size: 1.1rem;
+      }
+
+      .item-box {
+        padding: 12px;
+      }
+
+      .favorite-img {
+        max-height: 140px;
+      }
+
+      .avatar {
+        width: 70px;
+        height: 70px;
+      }
+
+      .section {
+        margin-top: 20px;
+      }
+
+      .avatar-upload-btn {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .profile-container {
+        padding: 15px 8px;
+      }
+
+      h2, h3 {
+        font-size: 1rem;
+      }
+
+      .favorite-img {
+        max-height: 120px;
+      }
+
+      .avatar {
+        width: 60px;
+        height: 60px;
+      }
+
+      form input, form select {
+        font-size: 0.85rem;
+      }
+
+      form button, .logout-link, .total-button, .avatar-upload-btn {
+        font-size: 0.8rem;
+        padding: 6px 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="profile-container">
+  <div class="section">
+    <h2>Профиль</h2>
+    <a href="{% url 'home' %}">← На главную</a>
+
+    <form id="avatar-form" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="avatar-container">
+        {% if profile.avatar and profile.avatar.url %}
+          <img class="avatar" src="{{ profile.avatar.url }}" alt="Аватар" onerror="this.src='{% static 'images/placeholder.jpg' %}'; showToast('Не удалось загрузить аватар', true); console.warn('Аватар не загружен: {{ profile.avatar.url }}')">
+        {% else %}
+          <div class="avatar" style="background-image: url('{% static 'images/placeholder.jpg' %}'); background-size: cover;"></div>
+        {% endif %}
+        <label for="avatar-input" class="avatar-upload-btn">Загрузить аватар</label>
+        <input id="avatar-input" type="file" name="avatar" accept="image/*" style="display: none;">
+      </div>
+    </form>
+
+    <form method="post">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+      <label>Адрес доставки</label>
+      {{ form.address }}
+      <label>Телефон</label>
+      {{ form.phone }}
+      <button type="submit">Сохранить</button>
+    </form>
+
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <a class="logout-link" href="{% url 'logout' %}">Выйти</a>
+  </div>
+
+  <div class="section">
+    <h3>Корзина</h3>
+    {% if cart_items %}
+      {% for item in cart_items %}
+        <div class="item-box" data-item-id="{{ item.id }}">
+          {% if item.product.images.first %}
+            <img class="favorite-img" src="{{ item.product.images.first.image.url }}" alt="{{ item.product.title }}" onerror="this.src='{% static 'images/placeholder.jpg' %}'; console.warn('Изображение не загружено: {{ item.product.title }}')">
+          {% else %}
+            <div class="favorite-img-fallback">Изображение отсутствует</div>
+          {% endif %}
+          <p><strong>{{ item.product.title }}</strong></p>
+          <p>Цена: <span>{{ item.product.price }} EUR</span></p>
+          <p>Размер: <span>{{ item.size }}</span></p>
+          <div class="cart-item-quantity">
+            <button class="quantity-decrease">-</button>
+            <input type="number" class="quantity-input" value="{{ item.quantity }}" min="1">
+            <button class="quantity-increase">+</button>
+          </div>
+          <p>Сумма: <span class="item-total">{{ item.get_total_price|floatformat:2 }} EUR</span></p>
+          <button class="remove-item">Удалить</button>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p>Корзина пуста</p>
+    {% endif %}
+  </div>
+
+  <div class="section">
+    <h3>Итого</h3>
+    <p style="font-size: 0.95rem;">
+      <strong>Общая сумма: {{ cart_total|floatformat:2 }} EUR</strong>
+    </p>
+    <button onclick="showToast('Пока это заглушка 😎')" class="total-button">Оформить заказ</button>
+  </div>
+
+  <div class="section">
+    <h3>История заказов</h3>
+    {% if orders %}
+      {% for order in orders %}
+        <div class="item-box">
+          <p><strong>Заказ №{{ order.id }}</strong></p>
+          <p>Сумма: {{ order.total }} EUR</p>
+          <p>Дата: {{ order.created_at|date:"d.m.Y H:i" }}</p>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p>Нет заказов</p>
+    {% endif %}
+  </div>
+
+  <div class="section">
+    <h3>Избранное</h3>
+    {% if favorites %}
+      {% for fav in favorites %}
+        {% if fav.product %}
+          {% if fav.product.images.first %}
+            <div class="item-box">
+              <img class="favorite-img" src="{{ fav.product.images.first.image.url }}" alt="{{ fav.product.title }}" onerror="this.src='{% static 'images/no-image-icon.png' %}'; console.warn('Изображение не загружено: {{ fav.product.title }}')">
+              <p><strong>{{ fav.product.title }}</strong></p>
+              <p>Цена: {{ fav.product.price }} EUR</p>
+              <a href="{% url 'product_detail' fav.product.pk %}">Перейти к товару</a>
+            </div>
+          {% else %}
+            <div class="item-box">
+              <img class="favorite-img" src="{% static 'images/no-image-icon.png' %}" alt="Изображение отсутствует">
+              <p><strong>{{ fav.product.title }}</strong></p>
+              <p>Цена: {{ fav.product.price }} EUR</p>
+              <a href="{% url 'product_detail' fav.product.pk %}">Перейти к товару</a>
+            </div>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    {% else %}
+      <p>Нет избранных товаров</p>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+// Toast notification function
+function showToast(message, isError = false) {
+  const toast = document.createElement('div');
+  toast.textContent = message;
+  toast.style.cssText = `
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: ${isError ? '#FF3B30' : '#00D4FF'};
+    color: ${isError ? '#FFFFFF' : '#181818'};
+    padding: 10px 20px;
+    border-radius: 8px;
+    z-index: 1000;
+    font-size: 0.9rem;
+    font-weight: 400;
+    opacity: 0;
+    transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  `;
+  document.body.appendChild(toast);
+  requestAnimationFrame(() => {
+    toast.style.opacity = '1';
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      setTimeout(() => toast.remove(), 400);
+    }, 3000);
+  });
+}
+
+// Handle avatar upload
+document.getElementById('avatar-input').addEventListener('change', function(e) {
+  const file = e.target.files[0];
+  if (!file) {
+    showToast('Файл не выбран', true);
+    return;
+  }
+
+  // Validate file type
+  const validTypes = ['image/jpeg', 'image/png', 'image/gif'];
+  if (!validTypes.includes(file.type)) {
+    showToast('Поддерживаются только JPEG, PNG или GIF', true);
+    return;
+  }
+
+  // Validate file size (max 5MB)
+  const maxSize = 5 * 1024 * 1024; // 5MB in bytes
+  if (file.size > maxSize) {
+    showToast('Файл слишком большой (макс. 5МБ)', true);
+   取り組
+
+    // Submit the form
+    const form = document.getElementById('avatar-form');
+    form.submit();
+    showToast('Загрузка аватара...');
+});
+
+// Handle cart item removal
+document.querySelectorAll('.remove-item').forEach(button => {
+  button.addEventListener('click', async function() {
+    const itemBox = this.closest('.item-box');
+    const itemId = itemBox.dataset.itemId;
+
+    if (!itemId) {
+      showToast('Ошибка: не удалось определить товар', true);
+      return;
+    }
+
+    const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
+
+    try {
+      const response = await fetch(`/cart/remove/${itemId}/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrfToken
+        },
+        credentials: 'same-origin'
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        itemBox.remove();
+        const cartTotalElement = document.querySelector('.section p strong');
+        cartTotalElement.textContent = `${data.new_total.toFixed(2)} EUR`;
+
+        const remainingItems = document.querySelectorAll('.item-box');
+        if (remainingItems.length === 0) {
+          const cartSection = document.querySelector('.section:nth-of-type(2)');
+          cartSection.innerHTML = '<h3>Корзина</h3><p>Корзина пуста</p>';
+        }
+
+        showToast('Товар удален из корзины');
+      } else {
+        showToast(data.error || 'Не удалось удалить товар', true);
+      }
+    } catch (err) {
+      showToast('Ошибка сети', true);
+      console.error('Remove item error:', err);
+    }
+  });
+});
+</script>
+</body>
+</html>

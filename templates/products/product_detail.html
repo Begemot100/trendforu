@@ -1,0 +1,414 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ product.title }} — TRENDFORU</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@400;500&display=swap">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #0A0A0A;
+      color: #E0E0E0;
+      font-family: 'Helvetica Neue', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+      margin: 0;
+      padding: 0 20px;
+      max-width: 800px;
+      margin-inline: auto;
+      min-height: 100vh;
+      line-height: 1.6;
+      opacity: 0;
+      transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    body.loaded {
+      opacity: 1;
+    }
+
+    .header-buttons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 40px 0;
+    }
+
+    .back-button {
+      font-size: 0.9rem;
+      font-weight: 400;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: #FFFFFF;
+      transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: opacity, transform;
+    }
+
+    .back-button:hover {
+      opacity: 0.7;
+      transform: translateX(-4px);
+    }
+
+    .profile-button {
+      font-size: 0.9rem;
+      font-weight: 400;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: #FFFFFF;
+      border: 1px solid #FFFFFF;
+      padding: 8px 16px;
+      border-radius: 4px;
+      transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background 0.4s ease, box-shadow 0.4s ease;
+      will-change: opacity, transform, background, box-shadow;
+      background: rgba(10, 10, 10, 0.7);
+    }
+
+    .profile-button:hover {
+      opacity: 0.9;
+      transform: translateX(4px);
+      background: #333333;
+      color: #FFFFFF;
+      box-shadow: 0 2px 8px rgba(255, 255, 255, 0.2);
+    }
+
+    .profile-button a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .slider-container {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: 20px;
+      -webkit-overflow-scrolling: touch;
+      margin-top: 20px;
+      border-radius: 8px;
+      background: #1A1A1A;
+      padding: 10px;
+      animation: fadeInUp 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    .slider-container img {
+      width: 100%;
+      max-height: 500px;
+      flex-shrink: 0;
+      scroll-snap-align: center;
+      object-fit: cover;
+      border-radius: 8px;
+      transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: opacity, transform;
+    }
+
+    .slider-container img:hover {
+      opacity: 0.9;
+      transform: scale(1.02);
+    }
+
+    .product-info {
+      text-align: center;
+      padding: 40px 0;
+      animation: fadeInUp 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .product-info h1 {
+      font-size: 1.8rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #FFFFFF;
+      margin-bottom: 12px;
+    }
+
+    .price {
+      font-size: 1.2rem;
+      color: #B0B0B0;
+      margin-bottom: 16px;
+    }
+
+    .product-sizes {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #888;
+      margin-bottom: 24px;
+    }
+
+    select,
+    input[type="number"] {
+      font-family: inherit;
+      background: #222222;
+      color: #E0E0E0;
+      border: 1px solid #333;
+      padding: 12px;
+      font-size: 1rem;
+      width: 100%;
+      margin-bottom: 16px;
+      box-sizing: border-box;
+      text-align: center;
+      border-radius: 4px;
+      transition: border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: border-color;
+    }
+
+    select:focus,
+    input[type="number"]:focus {
+      border-color: #00D4FF;
+      outline: none;
+    }
+
+    .add-to-cart {
+      width: 100%;
+      padding: 14px;
+      font-size: 0.9rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      background: transparent;
+      border: 1px solid #FFFFFF;
+      color: #FFFFFF;
+      cursor: pointer;
+      text-transform: uppercase;
+      border-radius: 4px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: background, color, transform;
+    }
+
+    .add-to-cart:hover {
+      background: #FFFFFF;
+      color: #0A0A0A;
+      transform: scale(1.02);
+    }
+
+    .add-to-cart:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: space-between;
+      padding: 40px 0;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      animation: fadeIn 1.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    .footer-links a {
+      color: #B0B0B0;
+      text-decoration: none;
+      transition: color 0.3s ease, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .footer-links a:hover {
+      color: #FFFFFF;
+      transform: translateY(-2px);
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 0 15px;
+      }
+
+      .header-buttons {
+        margin: 20px 0;
+      }
+
+      .product-info h1 {
+        font-size: 1.5rem;
+      }
+
+      .price {
+        font-size: 1.1rem;
+      }
+
+      .slider-container img {
+        max-height: 400px;
+      }
+    }
+  </style>
+</head>
+<body onload="document.body.classList.add('loaded')">
+  <div class="header-buttons">
+    <a href="{% url 'product_list' %}" class="back-button">← BACK</a>
+    {% if request.user.is_authenticated %}
+      <div class="profile-button">
+        <a href="{% url 'profile' %}">{{ request.user.username }}</a>
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="slider-container">
+    {% for img in product.images.all %}
+      <img src="{{ img.image.url }}" alt="{{ product.title }}" onerror="this.src='{% static 'img/placeholder.jpg' %}'">
+    {% empty %}
+      <img src="{% static 'img/placeholder.jpg' %}" alt="Нет изображения">
+    {% endfor %}
+  </div>
+
+  <div class="product-info">
+    <h1>{{ product.title }}</h1>
+    <p class="price">{{ product.price }} EUR</p>
+    <div class="product-description">{{ product.description }}</div>
+    <p class="product-sizes">
+      {% for size in product.size_variants.all %}
+        {{ size.size }}{% if not forloop.last %} - {% endif %}
+      {% endfor %}
+    </p>
+
+    <form id="add-to-cart-form">
+      <input type="hidden" id="csrf-token" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+      {% if product.size_variants.all %}
+        <select name="size" id="size-select" required>
+          <option value="" disabled selected>Select size</option>
+          {% for size in product.size_variants.all %}
+            <option value="{{ size.size }}" data-stock="{{ size.stock }}" {% if size.stock == 0 %}disabled{% endif %}>
+              {{ size.size }} ({{ size.stock }} in stock){% if size.stock == 0 %} - Out of stock{% endif %}
+            </option>
+          {% endfor %}
+        </select>
+      {% endif %}
+      <input type="number" id="quantity" name="quantity" value="1" min="1" max="1">
+      <button type="submit" class="add-to-cart">ADD TO BAG</button>
+    </form>
+  </div>
+
+  <div class="footer-links">
+    <!-- Add footer links if needed -->
+  </div>
+
+  <script>
+    const sizeSelect = document.getElementById('size-select');
+    const quantityInput = document.getElementById('quantity');
+    const addToCartBtn = document.querySelector('.add-to-cart');
+    const form = document.getElementById('add-to-cart-form');
+
+    // Update max quantity based on selected size
+    function updateQuantityMax() {
+      if (sizeSelect) {
+        const selectedOption = sizeSelect.options[sizeSelect.selectedIndex];
+        const stock = parseInt(selectedOption.dataset.stock) || 0;
+        quantityInput.max = stock || 1;
+        if (parseInt(quantityInput.value) > stock) {
+          quantityInput.value = stock || 1;
+        }
+      }
+    }
+
+    if (sizeSelect) {
+      updateQuantityMax();
+      sizeSelect.addEventListener('change', updateQuantityMax);
+    }
+
+    // Handle form submission with AJAX
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      if (sizeSelect && !sizeSelect.value) {
+        showToast('Please select a size');
+        return;
+      }
+
+      const size = sizeSelect?.value || '';
+      const quantity = parseInt(quantityInput.value);
+      const maxQuantity = parseInt(quantityInput.max);
+
+      if (quantity > maxQuantity) {
+        showToast(`Only ${maxQuantity} items available`);
+        return;
+      }
+
+      addToCartBtn.disabled = true;
+      const csrfToken = document.getElementById('csrf-token').value;
+
+      try {
+        const response = await fetch("{% url 'add_to_cart' product.pk %}", {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrfToken
+          },
+          body: JSON.stringify({
+            product_id: {{ product.pk }},
+            size: size,
+            quantity: quantity
+          }),
+          credentials: 'same-origin'
+        });
+
+        const data = await response.json();
+
+        addToCartBtn.disabled = false;
+
+        if (response.status === 302) {
+          showToast('Please log in to add items to cart');
+          setTimeout(() => window.location.href = '/login/', 1000);
+          return;
+        }
+
+        if (data.success) {
+          showToast('Item added to cart');
+          // Update cart counter if present
+          const cartCounter = document.querySelector('.cart-counter');
+          if (cartCounter) {
+            cartCounter.textContent = data.total_items || 0;
+          }
+        } else {
+          showToast(data.error || 'Failed to add to cart');
+        }
+      } catch (err) {
+        addToCartBtn.disabled = false;
+        showToast('Network error');
+        console.error('Add to cart error:', err);
+      }
+    });
+
+    // Toast notification function (matches shop catalog)
+    function showToast(message) {
+      const toast = document.createElement('div');
+      toast.textContent = message;
+      toast.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #E53935;
+        color: #FFFFFF;
+        padding: 10px 20px;
+        border-radius: 8px;
+        z-index: 1000;
+        font-size: 0.9rem;
+        font-weight: 300;
+        opacity: 0;
+        transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      `;
+      document.body.appendChild(toast);
+      requestAnimationFrame(() => {
+        toast.style.opacity = '1';
+        setTimeout(() => {
+          toast.style.opacity = '0';
+          setTimeout(() => toast.remove(), 400);
+        }, 3000);
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,237 @@
+@import url('https://fonts.googleapis.com/css2?family=NeueHaasGroteskText+Pro&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+    font-family: '#44 Font', sans-serif;
+  background: linear-gradient(135deg, #0f0f0f, #1a1a1a, #121212);
+    background-size: 400% 400%;
+  animation: backgroundShift 20s ease infinite;
+
+  color: white;
+    overflow-x: hidden;
+  overflow-y: auto;
+    min-height: 100vh;
+  scroll-behavior: smooth;
+  font-size: 20px;
+}
+
+@keyframes backgroundShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+/* --- HEADER --- */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 50px;
+  background: transparent;
+  transition: opacity 0.5s ease;
+  mix-blend-mode: difference;
+}
+
+header.hidden {
+  opacity: 1;
+  pointer-events: none;
+}
+
+nav a {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 200;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-decoration: none;
+  margin-left: 30px;
+  transition: color 0.3s ease;
+}
+
+nav a:hover {
+  color: #ccc;
+}
+
+/* --- MAIN PAGE / ЗАСТАВКА --- */
+.main-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #F5F5F5;
+  z-index: 900;
+}
+
+.logo {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 990;
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: 10vw;
+      color: #F28C82;
+      text-align: center;
+      letter-spacing: 0.5rem;
+      text-transform: uppercase;
+      mix-blend-mode: difference;
+      filter: contrast(110%) brightness(120%);
+      line-height: 1;
+      pointer-events: none;
+    }
+
+/* --- SCROLL BUBBLE --- */
+.scroll-circle {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 25px;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: fixed;
+  bottom: 6vh;
+  left: 50%;
+  transform: translateX(-50%);
+  mix-blend-mode: difference;
+  z-index: 9999;
+  transition: opacity 0.5s ease;
+  animation: pulse 2s infinite ease-in-out;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+
+}
+
+@keyframes pulse {
+  0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.8; }
+  50% { transform: translateX(-50%) scale(1.2); opacity: 1; }
+}
+
+
+
+/* --- MEDIA SECTION --- */
+.media-section {
+  position: relative;
+  z-index: 1;
+  padding-top: 100vh;
+}
+
+/* --- GALLERY --- */
+.gallery {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 120px 0;
+  gap: 100px;
+  min-height: 600vh;
+}
+
+/* --- IMAGE BLOCKS --- */
+.fade-up {
+  opacity: 1;
+  transform: translateY(40px);
+  transition: all 0.9s ease-out;
+  filter: invert(1) grayscale(1);
+}
+
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+  filter: invert(0) grayscale(0);
+}
+
+@media (max-width: 1024px) {
+  .gallery {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 20px;
+
+  }
+
+  .glass-wrapper img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+
+  .logo {
+    font-size: 10vw;
+  }
+}
+
+.align-left {
+  align-self: start;
+}
+
+.align-right {
+  align-self: end;
+}
+
+.glass-wrapper {
+  backdrop-filter: blur(6px);
+  overflow: hidden;
+  transition: transform 0.5s ease, box-shadow 0.3s ease;
+}
+
+.glass-wrapper:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.2);
+}
+
+.user-dropdown {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.user-dropdown span {
+  color: white;
+  padding: 5px 10px;
+}
+
+.user-dropdown .dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #111;
+  min-width: 120px;
+  box-shadow: 0px 8px 16px rgba(0,0,0,0.3);
+  z-index: 1001;
+  right: 0;
+  top: 100%;
+}
+
+.user-dropdown .dropdown-content a {
+  color: white;
+  padding: 10px 12px;
+  text-decoration: none;
+  display: block;
+}
+
+.user-dropdown .dropdown-content a:hover {
+  background-color: #333;
+}
+
+.user-dropdown:hover .dropdown-content {
+  display: block;
+}

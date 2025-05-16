@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+    <link href="https://fonts.cdnfonts.com/css/44-font" rel="stylesheet">
+
+  <title>{% block title %}TRENDFORU{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/shop.css' %}">
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+
+
+</head>
+<body>
+  <header>
+    <div>TRENDFORU</div>
+    <nav>
+      <a href="{% url 'shop' %}">SHOP</a>
+      <a href="{% url 'cart' %}">CART</a>
+      {% if request.user.is_authenticated %}
+        <div class="user-dropdown">
+          <span>{{ request.user.username }}</span>
+          <div class="dropdown-content">
+            <a href="{% url 'profile' %}">Профиль</a>
+            <a href="{% url 'logout' %}">Выйти</a>
+          </div>
+        </div>
+      {% else %}
+        <a href="{% url 'login' %}">LOGIN</a>
+      {% endif %}
+    </nav>
+  </header>
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer>
+    <p>&copy; 2025 TRENDFORU</p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,85 @@
+/* static/css/auth.css */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&display=swap');
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Playfair Display', serif;
+  background: linear-gradient(135deg, #0f0f0f, #1d1d1d);
+  color: white;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-container {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 40px 50px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  max-width: 400px;
+  width: 100%;
+}
+
+.auth-container h2 {
+  margin-bottom: 30px;
+  font-size: 28px;
+  text-align: center;
+  color: #ffffffcc;
+}
+
+.auth-container label {
+  font-size: 14px;
+  margin-bottom: 6px;
+  display: block;
+  color: #ddd;
+}
+
+.auth-container input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-size: 14px;
+  outline: none;
+}
+
+.auth-container input::placeholder {
+  color: #aaa;
+}
+
+.auth-container button {
+  width: 100%;
+  padding: 12px;
+  background: #a62828;
+  border: none;
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.auth-container button:hover {
+  background: #8f1f1f;
+}
+
+.auth-container p {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 13px;
+}
+
+.auth-container a {
+  color: #fff;
+  text-decoration: underline;
+  font-weight: bold;
+}

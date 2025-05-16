@@ -1,0 +1,10 @@
+<h2>Подтверждение заказа</h2>
+<ul>
+    {% for item in cart_items %}
+        <li>{{ item.product.title }} ({{ item.size }}) — {{ item.quantity }} шт.</li>
+    {% endfor %}
+</ul>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Подтвердить заказ</button>
+</form>

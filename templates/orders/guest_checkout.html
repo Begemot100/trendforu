@@ -1,0 +1,105 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Оформление заказа как гость</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: #111;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      padding: 60px 20px;
+      margin: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: #1c1c1c;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.3);
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 28px;
+    }
+    .item {
+      border-bottom: 1px solid #333;
+      padding: 16px 0;
+    }
+    .item:last-child {
+      border-bottom: none;
+    }
+    .item-title {
+      font-weight: 600;
+    }
+    .item-details {
+      font-size: 14px;
+      color: #aaa;
+    }
+    .total {
+      margin-top: 30px;
+      font-size: 20px;
+      font-weight: bold;
+      text-align: right;
+    }
+    form {
+      margin-top: 40px;
+    }
+    input[type="text"], input[type="tel"] {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border: none;
+      border-radius: 8px;
+      background: #2a2a2a;
+      color: white;
+      font-size: 14px;
+    }
+    button {
+      width: 100%;
+      background: #fff;
+      color: #000;
+      font-weight: 600;
+      font-size: 16px;
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background: #ccc;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>Ваш заказ</h1>
+  {% if items %}
+    {% for item in items %}
+      <div class="item">
+        <div class="item-title">{{ item.product.title }}</div>
+        <div class="item-details">
+          Размер: {{ item.size }} | Кол-во: {{ item.quantity }} | Сумма: {{ item.get_total_price }} ₽
+        </div>
+      </div>
+    {% endfor %}
+    <div class="total">Итого: {{ total }} ₽</div>
+  {% else %}
+    <p>Корзина пуста.</p>
+  {% endif %}
+
+  <form method="post">
+    {% csrf_token %}
+    <input type="text" name="full_name" placeholder="Ваше имя" required>
+    <input type="tel" name="phone" placeholder="Телефон для связи" required>
+    <input type="text" name="address" placeholder="Адрес доставки" required>
+    <button type="submit">Оформить заказ</button>
+  </form>
+</div>
+</body>
+</html>

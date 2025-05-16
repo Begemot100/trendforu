@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Playfair Display', serif;
+  background: linear-gradient(135deg, #015d61, #3e002f);
+  color: white;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  min-height: 100vh; /* ← не ограничиваем прокрутку */
+}
+
+
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 30px 40px;
+  font-size: 14px;
+  letter-spacing: 2px;
+}
+
+.logo {
+  font-size: 6vw;
+  text-align: center;
+  color: #a62828;
+  position: relative;
+  top: 25vh;
+}
+
+.scroll-circle {
+  position: fixed;
+  z-index: 9999;
+  background: rgba(255,255,255,0.15);
+  color: white;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: difference;
+}
+
+
+nav a {
+  color: white;
+  text-decoration: none;
+  margin-left: 30px;
+}

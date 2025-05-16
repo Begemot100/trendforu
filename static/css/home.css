@@ -1,0 +1,208 @@
+/* ===== Адаптация под мобильные устройства ===== */
+@media (max-width: 1024px) {
+  header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+  }
+
+  nav {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  nav a,
+  .user-dropdown > span {
+    font-size: 18px;
+    font-weight: 400;
+  }
+
+  .user-dropdown {
+    position: relative;
+  }
+
+  .dropdown-content {
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background-color: #111;
+    padding: 12px;
+    display: none;
+    flex-direction: column;
+  }
+
+  .user-dropdown:hover .dropdown-content {
+    display: flex;
+  }
+}
+
+/* ===== Фиксированный header с позиционированием по углам ===== */
+.fixed-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.fixed-header .corner {
+  position: absolute;
+  pointer-events: auto;
+  padding: 18px 22px;
+  font-size: 22px;
+  font-weight: 500;
+  color: white;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.fixed-header .corner a {
+  color: white !important;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+.fixed-header .corner a:hover {
+  opacity: 0.8;
+}
+
+/* ===== Позиции по углам ===== */
+.corner.top-left {
+  top: 10px;
+  left: 10px;
+}
+
+.corner.top-right {
+  top: 10px;
+  right: 10px;
+  text-transform: uppercase;
+  text-decoration: none;
+
+
+}
+
+.corner.bottom-left {
+  bottom: 10px;
+  left: 10px;
+
+}
+
+.corner.bottom-right {
+  bottom: 10px;
+  right: 10px;
+
+}
+
+/* ===== Контентная часть и карточки ===== */
+@media (max-width: 1024px) {
+  .shop-title {
+    font-size: 48px;
+    text-align: center;
+    margin-bottom: 60px;
+    letter-spacing: 6px;
+    font-weight: 500;
+  }
+
+  .shop-container {
+    padding: 100px 24px;
+  }
+
+  .product-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 70px;
+    padding: 0 16px;
+  }
+
+  .product-card {
+    padding: 40px;
+    border-radius: 12px;
+  }
+
+  .product-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 16px;
+  }
+
+  .product-title {
+    font-size: 28px;
+    font-weight: 500;
+    margin-top: 24px;
+  }
+
+  .product-price {
+    font-size: 24px;
+    font-weight: 500;
+    color: #f1f1f1;
+    margin-top: 8px;
+  }
+
+  .product-sizes,
+  .product-sold-out {
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    margin-top: 6px;
+    color: #aaa;
+  }
+}
+/* Чёрный фон, закрывающий экран */
+#intro-overlay {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  animation: slideUp 1s ease-out 2.4s forwards;
+}
+
+/* Текст в центре */
+#intro-text {
+  font-size: 58px;
+  font-weight: 500;
+  letter-spacing: 4px;
+  color: #fff;
+  font-family: '#44 Font', sans-serif;
+  text-transform: uppercase;
+  animation: stretchFade 2.4s ease forwards;
+  pointer-events: none;
+  transform: translateY();
+  filter: invert(0) grayscale(0);
+}
+
+/* Анимация появления текста */
+@keyframes stretchFade {
+  0% {
+    opacity: 0;
+    transform: scaleX(0.7) scaleY(1.5);
+    letter-spacing: 12px;
+  }
+  20% {
+    opacity: 1;
+    transform: scaleX(1) scaleY(1);
+    letter-spacing: 4px;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scaleX(1.2) scaleY(1.2);
+  }
+}
+
+/* Анимация ухода черного экрана вверх */
+@keyframes slideUp {
+  to {
+    transform: translateY(-100%);
+  }
+}

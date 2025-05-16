@@ -1,0 +1,176 @@
+
+/* ===== Базовая стилизация ===== */
+body {
+  background: #F5F7FA;
+  color: #fff;
+  font-family: '#44 Font', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.back-link a {
+  color: #aaa;
+  text-decoration: none;
+  font-size: 14px;
+  display: inline-block;
+  margin: 20px;
+}
+
+/* ===== Контейнер карточки товара ===== */
+.product-detail-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 60px;
+  padding: 40px 20px;
+  box-sizing: border-box;
+}
+
+.product-images {
+  flex: 1;
+  min-width: 360px;
+}
+
+.product-images .main-image {
+  width: 100%;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.thumbnails {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.thumbnails img {
+  width: 60px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 4px;
+  opacity: 0.6;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.thumbnails img:hover {
+  opacity: 1;
+}
+
+.product-info {
+  flex: 1;
+  color: #037a46;
+  min-width: 320px;
+}
+
+.product-info h1 {
+  font-size: 32px;
+  color: #037a46;
+  margin: 10px 0;
+}
+
+.product-info p {
+  margin: 6px 0;
+  font-size: 14px;
+  color: #ccc;
+}
+
+.product-info .price {
+  font-size: 20px;
+  font-weight: 600;
+  color: #444;
+  margin: 20px 0;
+}
+
+.product-info select,
+.product-info input[type="number"] {
+  background: #ff85b8;
+  color: #444;
+  border: 1px solid #333;
+  padding: 10px;
+  margin-top: 10px;
+  font-size: 14px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.quantity {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.quantity label {
+  flex-shrink: 0;
+}
+
+.add-to-cart {
+  margin-top: 30px;
+  padding: 14px 20px;
+  border: 1px solid #fff;
+  background: transparent;
+  color: #fff;
+  width: 100%;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.add-to-cart:hover {
+  background: #fff;
+  color: #000;
+}
+
+/* ===== Адаптация под мобильные устройства ===== */
+@media (max-width: 1024px) {
+  .back-link a {
+    font-size: 16px;
+    margin: 16px 16px 24px;
+  }
+
+  .product-detail-container {
+    flex-direction: column;
+    gap: 32px;
+    padding: 20px;
+  }
+
+  .product-info h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  .product-info p {
+    font-size: 16px;
+    margin: 6px 0;
+  }
+
+  .product-info .price {
+    font-size: 20px;
+    margin: 16px 0;
+  }
+
+  .product-info select,
+  .product-info input[type="number"] {
+    font-size: 16px;
+    padding: 12px;
+  }
+
+  .quantity {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .add-to-cart {
+    padding: 16px;
+    font-size: 18px;
+  }
+
+  .thumbnails img {
+    width: 70px;
+    height: 90px;
+  }
+}

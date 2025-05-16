@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TRENDFORU</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/shop.css' %}">
+  <link rel="stylesheet" href="{% static 'css/product-detail.css' %}">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap">
+</head>
+<body>
+  <header style="padding: 20px 40px; display: flex; justify-content: space-between; align-items: center;">
+    <div style="font-size: 24px; font-weight: 600;">TRENDFORU</div>
+    <nav>
+      <a href="{% url 'shop' %}" style="margin-right: 20px;">SHOP</a>
+      <a href="{% url 'cart' %}">CART</a>
+    </nav>
+  </header>
+
+  <div class="shop-container">
+    <h1 class="shop-title">TRENDFORU</h1>
+    <div class="product-grid">
+      {% for product in products %}
+        <div class="product-card">
+          <a href="{% url 'product_detail' product.pk %}">
+            {% if product.images.first %}
+              <img src="{{ product.images.first.image.url }}" alt="{{ product.title }}">
+            {% else %}
+              <img src="{{ product.image.url }}" alt="{{ product.title }}">
+            {% endif %}
+            <h3>{{ product.title }}</h3>
+          </a>
+
+          <p>{{ product.description|truncatewords:20 }}</p>
+          <p><strong>Цена:</strong> {{ product.price }} EUR</p>
+          <p><strong>Размеры:</strong> {{ product.sizes }}</p>
+          <p><strong>Категория:</strong> {{ product.category }}</p>
+          <p><strong>В наличии:</strong> {{ product.stock }}</p>
+
+          <form action="{% url 'add_to_cart' product.pk %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="size" value="M">
+            <input type="hidden" name="quantity" value="1">
+            <button type="submit">Добавить в корзину</button>
+          </form>
+        </div>
+      {% empty %}
+        <p>Нет доступных товаров</p>
+      {% endfor %}
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,424 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TRENDFORU</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@400;500&display=swap">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/home.css' %}">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Helvetica Neue', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+      background: #0A0A0A;
+      color: #E0E0E0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      overflow-y: auto;
+      scroll-behavior: smooth;
+      font-size: 1rem;
+    }
+
+    /* Intro Overlay */
+    #intro-overlay {
+      position: fixed;
+      inset: 0;
+      background: #F5F5F5;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: slideUp 1s ease-out 2.4s forwards;
+    }
+
+    #intro-text {
+      font-size: 3.5rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      color: #0A0A0A;
+      text-transform: uppercase;
+      animation: stretchFade 3.4s ease forwards;
+      pointer-events: none;
+    }
+
+    @keyframes stretchFade {
+      0% {
+        opacity: 0;
+        transform: scaleX(0.8) scaleY(1.3);
+        letter-spacing: 0.15em;
+      }
+      20% {
+        opacity: 1;
+        transform: scaleX(1) scaleY(1);
+        letter-spacing: 0.1em;
+      }
+      80% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+        transform: scaleX(1.1) scaleY(1.1);
+      }
+    }
+
+    @keyframes slideUp {
+      to {
+        transform: translateY(-100%);
+      }
+    }
+
+    /* Fixed Header */
+    .fixed-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    .fixed-header .corner {
+      position: absolute;
+      pointer-events: auto;
+      padding: 12px 16px;
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: #FFFFFF;
+      text-transform: uppercase;
+      transition: opacity 0.3s ease;
+    }
+
+    .fixed-header .corner a {
+      color: #FFFFFF;
+      text-decoration: none;
+      border: 1px solid #FFFFFF;
+      padding: 8px 12px;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+    }
+
+    .fixed-header .corner a:hover {
+      background: #FFFFFF;
+      color: #0A0A0A;
+    }
+
+    .corner.top-left { top: 20px; left: 20px; }
+    .corner.top-right { top: 20px; right: 20px; }
+    .corner.bottom-left { bottom: 20px; left: 20px; }
+    .corner.bottom-right { bottom: 20px; right: 20px; }
+
+    /* Main Page */
+    .main-page {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: transparent;
+      z-index: 900;
+    }
+
+    .logo {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 5vw;
+      font-weight: 400;
+      text-align: center;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      pointer-events: none;
+      opacity: 1;
+      z-index: 910;
+    }
+
+    .logo span {
+      color: #FFFFFF;
+      display: inline-block;
+      transition: color 0.2s ease;
+    }
+
+    /* Scroll Circle */
+    .scroll-circle {
+      background: transparent;
+      color: #FFFFFF;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      position: fixed;
+      bottom: 5vh;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 9999;
+      transition: background 0.3s ease, color 0.3s ease;
+      animation: pulse 2s infinite ease-in-out;
+      opacity: 1;
+      cursor: pointer;
+    }
+
+    .scroll-circle:hover {
+      background: #FFFFFF;
+      color: #0A0A0A;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.8; }
+      50% { transform: translateX(-50%) scale(1.1); opacity: 1; }
+    }
+
+    /* Media Section */
+    .media-section {
+      position: relative;
+      z-index: 1;
+      padding-top: 100vh;
+    }
+
+    /* Gallery */
+    .gallery {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 100px 20px;
+      gap: 80px;
+      min-height: 600vh;
+    }
+
+    .glass-wrapper {
+      width: 100%;
+      max-width: 800px;
+      overflow: hidden;
+      border-radius: 8px;
+      transition: transform 0.5s ease, box-shadow 0.3s ease;
+      background: #1A1A1A;
+    }
+
+    .glass-wrapper img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      border-radius: 8px;
+      background: #333;
+      transition: opacity 0.3s ease;
+    }
+
+    .glass-wrapper:hover {
+      transform: scale(1.02);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .glass-wrapper:hover img {
+      opacity: 0.9;
+    }
+
+    .fade-up {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.9s ease-out;
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .align-left {
+      align-self: flex-start;
+    }
+
+    .align-right {
+      align-self: flex-end;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .gallery {
+        padding: 60px 15px;
+        gap: 60px;
+      }
+
+      .glass-wrapper {
+        max-width: 100%;
+      }
+
+      .logo {
+        font-size: 12vw;
+      }
+
+      .scroll-circle {
+        width: 100px;
+        height: 100px;
+        font-size: 0.8rem;
+      }
+
+      .fixed-header .corner {
+        font-size: 0.8rem;
+        padding: 10px 14px;
+      }
+
+      .corner a {
+        padding: 6px 10px;
+      }
+
+      #intro-text {
+        font-size: 2.5rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .gallery {
+        gap: 40px;
+      }
+
+      .logo {
+        font-size: 14vw;
+      }
+
+      .scroll-circle {
+        bottom: 3vh;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="intro-overlay">
+    <div id="intro-text">TRENDFORU</div>
+  </div>
+
+  <header class="fixed-header">
+    <div class="corner top-left">TRENDFORU</div>
+    {% if request.user.is_authenticated %}
+      <a href="{% url 'profile' %}" class="corner top-right">{{ request.user.username }}</a>
+    {% endif %}
+    <div class="corner bottom-left">
+      <a href="{% url 'product_list' %}">SHOP</a>
+    </div>
+    <div class="corner bottom-right">
+      {% if request.user.is_authenticated %}
+        <a href="{% url 'logout' %}">LOGOUT</a>
+      {% else %}
+        <a href="{% url 'login' %}">LOGIN</a>
+      {% endif %}
+    </div>
+  </header>
+
+  <div class="main-page">
+    <div class="logo">
+      {% for char in "TRENDFORU" %}
+        <span>{{ char }}</span>
+      {% endfor %}
+    </div>
+    <div class="scroll-circle" id="scrollBall">SCROLL</div>
+  </div>
+
+  <section class="media-section">
+    <div class="gallery">
+      {% for i in image_range %}
+        <div class="glass-wrapper fade-up" data-index="{{ forloop.counter0 }}">
+          <img src="{% static 'img/' %}{{ i }}.webp" alt="photo{{ i }}" onerror="this.src='{% static 'img/placeholder.jpg' %}'">
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <script src="{% static 'js/mouse-scroll.js' %}"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const items = document.querySelectorAll('.fade-up');
+      console.log('🎯 Найдено .fade-up:', items.length);
+
+      if (items.length === 0) {
+        console.warn('⚠️ Нет .fade-up — пропуск');
+        return;
+      }
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.2 });
+
+      items.forEach((el, i) => {
+        const side = Math.random() > 0.5 ? 'align-left' : 'align-right';
+        el.classList.add(side);
+        el.dataset.index = i;
+        observer.observe(el);
+      });
+
+      // Smooth scroll to gallery when clicking scroll circle
+      const scrollCircle = document.getElementById('scrollBall');
+      scrollCircle.addEventListener('click', () => {
+        document.querySelector('.media-section').scrollIntoView({ behavior: 'smooth' });
+      });
+
+      // Letter color inversion on image overlap
+      const letters = document.querySelectorAll('.logo span');
+      const images = document.querySelectorAll('.glass-wrapper img');
+
+      function checkLetterOverlaps() {
+        letters.forEach(letter => {
+          const letterRect = letter.getBoundingClientRect();
+          let isOverlapping = false;
+
+          images.forEach(img => {
+            const imgRect = img.getBoundingClientRect();
+            if (
+              letterRect.left < imgRect.right &&
+              letterRect.right > imgRect.left &&
+              letterRect.top < imgRect.bottom &&
+              letterRect.bottom > imgRect.top
+            ) {
+              isOverlapping = true;
+            }
+          });
+
+          letter.style.color = isOverlapping ? '#0A0A0A' : '#FFFFFF';
+        });
+      }
+
+      // Debounce scroll event to improve performance
+      let isScrolling;
+      window.addEventListener('scroll', () => {
+        if (isScrolling) cancelAnimationFrame(isScrolling);
+        isScrolling = requestAnimationFrame(checkLetterOverlaps);
+      });
+
+      // Initial check
+      checkLetterOverlaps();
+    });
+
+    window.addEventListener('load', () => {
+      document.body.classList.add('loaded');
+    });
+
+    setTimeout(() => {
+      const overlay = document.getElementById("intro-overlay");
+      if (overlay) {
+        setTimeout(() => overlay.remove(), 1000);
+      }
+    }, 3400);
+  </script>
+</body>
+</html>
