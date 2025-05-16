@@ -2,7 +2,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .models import Order, OrderItem
-from apps.cart.cart import get_cart_items  # предполагается, будет реализован
+from apps.cart.cart import get_cart_items  
 from django.db import transaction
 
 @login_required
@@ -22,7 +22,7 @@ def create_order(request):
                     quantity=item['quantity'],
                     price=item['product'].price,
                 )
-        # Очистка корзины — предполагается отдельная реализация
+       
         request.session['cart'] = {}
         return redirect('order_success')
 
