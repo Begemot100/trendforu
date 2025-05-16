@@ -2,7 +2,6 @@ import os
 from pathlib import Path
 import dj_database_url
 
-# Базовая директория проекта
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 STATIC_URL = '/static/'
@@ -10,12 +9,10 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 # STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
 
-# Безопасность
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'your-dev-key')
 DEBUG = os.environ.get('DEBUG', '') != 'False'
 ALLOWED_HOSTS = ['trend-production.up.railway.app', '127.0.0.1', 'localhost']
 
-# Приложения проекта
 INSTALLED_APPS = [
     'jazzmin',
     'django.contrib.admin',
@@ -25,7 +22,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # Наши приложения
     'apps.users',
     'apps.products',
     'apps.orders',
@@ -119,13 +115,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-# База данных
 DATABASES = {
     'default': dj_database_url.config(
-        default='postgresql://postgres:HdcRXWBNnBhKlKKvVjOtyzROpuJWAgcQ@switchback.proxy.rlwy.net:15085/railway'
     )
 }
-# Авторская модель пользователя
 AUTH_USER_MODEL = 'users.User'
 
 # Пароли
@@ -138,20 +131,16 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Язык и таймзона
 LANGUAGE_CODE = 'ru-ru'
 TIME_ZONE = 'Europe/Moscow'
 USE_I18N = True
 USE_TZ = True
 CSRF_TRUSTED_ORIGINS = ['https://trend-production.up.railway.app']
 
-# Статика и медиа
 # STATIC_URL = '/static/'
 # STATICFILES_DIRS = [BASE_DIR / "static"]
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / "media"
 
-# По умолчанию
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-# Django settings here
 
