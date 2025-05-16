@@ -7,13 +7,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('products', '0007_favorite'),
+        ("products", "0007_favorite"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='favorite',
-            name='product',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='liked_by', to='products.product'),
+            model_name="favorite",
+            name="product",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="liked_by",
+                to="products.product",
+            ),
         ),
     ]

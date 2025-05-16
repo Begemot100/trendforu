@@ -1,0 +1,5 @@
+repos:
+  - repo: https://github.com/pre-commit/mirrors-flake8
+    rev: v4.0.1        # или последняя доступная версия
+    hooks:
+      - id: flake8

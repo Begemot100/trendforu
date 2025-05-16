@@ -1,7 +1,8 @@
 from apps.products.models import Product
 
+
 def get_cart_items(request):
-    session_cart = request.session.get('cart', {})
+    session_cart = request.session.get("cart", {})
     items = []
     for product_id, data in session_cart.items():
         try:
@@ -9,9 +10,11 @@ def get_cart_items(request):
         except Product.DoesNotExist:
             continue  
 
-        items.append({
-            'product': product,
-            'size': data.get('size'),
-            'quantity': data.get('quantity', 1),
-        })
+        items.append(
+            {
+                "product": product,
+                "size": data.get("size"),
+                "quantity": data.get("quantity", 1),
+            }
+        )
     return items

@@ -7,18 +7,22 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('products', '0004_rename_sizes_product_size_string'),
+        ("products", "0004_rename_sizes_product_size_string"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='product',
-            name='image',
-            field=cloudinary.models.CloudinaryField(max_length=255, verbose_name='image'),
+            model_name="product",
+            name="image",
+            field=cloudinary.models.CloudinaryField(
+                max_length=255, verbose_name="image"
+            ),
         ),
         migrations.AlterField(
-            model_name='productimage',
-            name='image',
-            field=cloudinary.models.CloudinaryField(max_length=255, verbose_name='image'),
+            model_name="productimage",
+            name="image",
+            field=cloudinary.models.CloudinaryField(
+                max_length=255, verbose_name="image"
+            ),
         ),
     ]

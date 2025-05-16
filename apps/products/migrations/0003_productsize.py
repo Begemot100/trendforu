@@ -7,17 +7,46 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('products', '0002_productimage'),
+        ("products", "0002_productimage"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='ProductSize',
+            name="ProductSize",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('size', models.CharField(choices=[('XXS', 'XXS'), ('XS', 'XS'), ('S', 'S'), ('M', 'M'), ('L', 'L'), ('XL', 'XL'), ('XXL', 'XXL')], max_length=10)),
-                ('stock', models.PositiveIntegerField(default=0)),
-                ('product', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='size_variants', to='products.product')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "size",
+                    models.CharField(
+                        choices=[
+                            ("XXS", "XXS"),
+                            ("XS", "XS"),
+                            ("S", "S"),
+                            ("M", "M"),
+                            ("L", "L"),
+                            ("XL", "XL"),
+                            ("XXL", "XXL"),
+                        ],
+                        max_length=10,
+                    ),
+                ),
+                ("stock", models.PositiveIntegerField(default=0)),
+                (
+                    "product",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="size_variants",
+                        to="products.product",
+                    ),
+                ),
             ],
         ),
     ]

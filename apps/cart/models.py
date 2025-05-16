@@ -1,7 +1,9 @@
 # Cart models
 from django.conf import settings
 from django.db import models
+
 from apps.products.models import Product
+
 
 class CartItem(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -11,7 +13,7 @@ class CartItem(models.Model):
     added_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        unique_together = ('user', 'product', 'size')
+        unique_together = ("user", "product", "size")
 
     def get_total_price(self):
         return self.product.price * self.quantity
